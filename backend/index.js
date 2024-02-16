@@ -5,6 +5,7 @@ const app=express();
 const cors=require('cors');
 const userRoutes=require("./routes/userRoutes");
 const imageRoutes=require("./routes/imageRoutes");
+const rateLimiter=require("./middleware/ratelimiter");
 app.use(cors());
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -12,6 +13,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 const url="mongodb+srv://user:ankitraj@cluster0.ky8l28e.mongodb.net/"
 
+// const router=express.Router();
+// router.use(rateLimiter);
+app.use(rateLimiter);
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
